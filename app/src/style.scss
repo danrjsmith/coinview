@@ -1,0 +1,216 @@
+@import "~react-vis/dist/style";
+
+@font-face {
+  font-family: "PragatiNarrow";
+  src: url("./assets/PragatiNarrow-Bold.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "PragatiNarrow";
+  src: url("./assets/PragatiNarrow-Regular.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+#root {
+  border: 0;
+  margin: 0;
+  position: relative;
+  font-family: "PragatiNarrow";
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: #edeff7;
+  -webkit-font-smoothing: antialiased;
+}
+
+input,
+button,
+submit {
+  border: none;
+  outline: none;
+}
+
+body {
+  margin: 0;
+  overscroll-behavior: none;
+}
+
+a {
+  &:hover {
+    svg.arrow-right {
+      transform: translateX(4px);
+    }
+    svg.arrow-dash {
+      opacity: 1;
+    }
+  }
+}
+
+a:-webkit-any-link {
+  text-decoration: unset;
+}
+
+// loading spinner
+
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.lds-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #fff;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
+@keyframes lds-roller {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+body[data-theme="light"] {
+  --palette-primary-main: hsl(228, 74%, 63%);
+  --palette-primary-light: hsl(228, 73%, 75%);
+  --palette-primary-dark: hsl(228, 54%, 36%);
+  --palette-primary-contrast-text: hsl(0, 0%, 100%);
+  --palette-primary-contrast-success-text: hsl(133, 90%, 81%);
+  --palette-primary-contrast-error-text: hsl(0, 95%, 84%);
+
+  --palette-secondary-main: hsl(217, 84%, 69%);
+  --palette-secondary-light: hsl(216, 84%, 75%);
+  --palette-secondary-dark: hsl(246.63, 100%, 31.96%);
+  --palette-secondary-contrast-text: hsl(0, 0%, 100%);
+  --palette-secondary-contrast-success-text: hsl(133, 90%, 81%);
+  --palette-secondary-contrast-error-text: hsl(0, 95%, 84%);
+
+  --palette-error-main: hsl(0, 61%, 67%);
+  --palette-error-light: hsl(3, 69%, 83%);
+  --palette-error-dark: hsl(3, 55%, 37%);
+  --palette-error-contrast-text: hsl(3, 96%, 99%);
+
+  --palette-warning-main: hsl(40, 60%, 57%);
+  --palette-warning-light: hsl(40, 69%, 83%);
+  --palette-warning-dark: hsl(40, 55%, 37%);
+  --palette-warning-contrast-text: hsl(40, 96%, 99%);
+
+  --palette-neutral-main: hsl(228, 19%, 70%);
+  --palette-neutral-light: hsl(227, 14%, 55%);
+  --palette-neutral-dark: hsl(227, 17%, 33%);
+  --palette-neutral-contrast-text: hsl(0, 0%, 100%);
+
+  --palette-text-light: hsl(233, 12%, 74%);
+  --palette-text-main: hsl(228, 10%, 53%);
+  --palette-text-dark: hsl(227, 17%, 33%);
+
+  --palette-success-main: hsl(134, 37%, 63%);
+  --palette-success-light: hsl(114, 64%, 89%);
+  --palette-success-dark: hsl(114, 42%, 37%);
+  --palette-success-contrast-text: hsl(114, 100%, 100%);
+
+  --surface-main: #f6f7f9;
+  --surface-light: white;
+  --surface-dark: #edeff7;
+}
+
+body[data-theme="dark"] {
+  --palette-primary-main: hsl(228, 74%, 63%);
+  --palette-primary-light: hsl(228, 73%, 75%);
+  --palette-primary-dark: hsl(228, 54%, 36%);
+  --palette-primary-contrast-text: hsl(0, 0%, 100%);
+  --palette-primary-contrast-success-text: hsl(133, 90%, 81%);
+  --palette-primary-contrast-error-text: hsl(0, 95%, 84%);
+
+  --palette-secondary-main: hsl(217, 84%, 69%);
+  --palette-secondary-light: hsl(245.9, 100%, 88.04%);
+  --palette-secondary-dark: hsl(246.63, 100%, 31.96%);
+  --palette-secondary-contrast-text: hsl(0, 0%, 100%);
+  --palette-secondary-contrast-success-text: hsl(133, 90%, 81%);
+  --palette-secondary-contrast-error-text: hsl(0, 95%, 84%);
+
+  --palette-error-main: hsl(0, 61%, 67%);
+  --palette-error-light: hsl(3, 69%, 83%);
+  --palette-error-dark: hsl(3, 55%, 37%);
+  --palette-error-contrast-text: hsl(3, 96%, 99%);
+
+  --palette-warning-main: hsl(40, 60%, 57%);
+  --palette-warning-light: hsl(40, 69%, 83%);
+  --palette-warning-dark: hsl(40, 55%, 37%);
+  --palette-warning-contrast-text: hsl(40, 96%, 99%);
+
+  --palette-neutral-main: hsl(228, 19%, 70%);
+  --palette-neutral-light: hsl(227, 14%, 55%);
+  --palette-neutral-dark: hsl(227, 17%, 33%);
+  --palette-neutral-contrast-text: hsl(0, 0%, 100%);
+
+  --palette-text-light: hsl(233, 12%, 74%);
+  --palette-text-main: hsl(228, 10%, 53%);
+  --palette-text-dark: hsl(227, 17%, 33%);
+
+  --palette-success-main: hsl(134, 37%, 63%);
+  --palette-success-light: hsl(114, 64%, 89%);
+  --palette-success-dark: hsl(114, 42%, 37%);
+  --palette-success-contrast-text: hsl(114, 100%, 100%);
+
+  --surface-main: #f6f7f9;
+  --surface-light: white;
+  --surface-dark: #edeff7;
+}
