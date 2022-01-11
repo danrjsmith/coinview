@@ -1,10 +1,10 @@
-import React from "react";
+import React from "react"
 
 interface LoadingEllipsisProps {
-  size?: number;
+  size?: number
 }
 
-const ellipsisSize = 80;
+const ellipsisSize = 80
 
 export function LoadingEllipsis({ size = 80 }: LoadingEllipsisProps) {
   return (
@@ -74,5 +74,5 @@ export function LoadingEllipsis({ size = 80 }: LoadingEllipsisProps) {
         }}
       />
     </div>
-  );
+  )
 }

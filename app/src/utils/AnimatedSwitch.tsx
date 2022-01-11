@@ -1,6 +1,6 @@
-import { AnimatePresence, AnimatePresenceProps } from 'framer-motion'
-import React, { FC } from 'react'
-import { Switch, useLocation } from 'react-router'
+import { AnimatePresence, AnimatePresenceProps } from "framer-motion"
+import React, { FC } from "react"
+import { Switch, useLocation } from "react-router"
 
 export const AnimatedSwitch: FC<AnimatePresenceProps> = ({
   children,

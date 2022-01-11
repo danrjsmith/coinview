@@ -1,14 +1,16 @@
-import { makeStyles } from "@material-ui/styles";
-import clsx from "clsx";
-import React, { useEffect, useState } from "react";
-import { useCoinsMarkets } from "../../hooks/useCoinsMarkets";
-import { CoinList, PriceChangePercentage } from "../../services/types";
-import { theme } from "../../theme";
-import { AddWatchedCurrency } from "./AddWatchedCurrency";
-import { CryptoSearch } from "./CryptoSearch";
-import { CurrencySelector } from "./CurrencySelector";
-import { HighlightCard } from "./HighlightCard";
-import { Period, PeriodChips } from "./PeriodChips";
+import { makeStyles } from "@material-ui/styles"
+import clsx from "clsx"
+import React, { useEffect, useState } from "react"
+import { useContextSelector } from "use-context-selector"
+import { userPreferenceContext } from "../../contexts/UserPreferenceProvider"
+import { useCoinsMarkets } from "../../hooks/useCoinsMarkets"
+import { PriceChangePercentage } from "../../services/types"
+import { theme } from "../../theme"
+import { AddWatchedCurrency } from "./AddWatchedCurrency"
+import { CryptoSearch } from "./CryptoSearch"
+import { CurrencySelector } from "./CurrencySelector"
+import { HighlightCard } from "./HighlightCard"
+import { Period, PeriodChips } from "./PeriodChips"
 
 const useStyles = makeStyles({
   currencyCount: {
@@ -39,31 +41,39 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "space-between",
   },
-});
+})
 
 const periodPriceChangePeriodMap: Record<Period, PriceChangePercentage> = {
   "1d": "24h",
   "30d": "30d",
   "7d": "7d",
-};
+}
 
 export function WatchedCurrencies() {
-  const classes = useStyles();
-  const [searchboxOpen, setSearchboxOpen] = useState(false);
-  const [watchedCurrencies, setWatchedCurrencies] = useState<CoinList[]>([]);
-  const [period, setPeriod] = useState<Period>("1d");
-  const [vsCurrency, setVsCurrency] = useState<string>("gbp");
-  const { data: marketData, fetch } = useCoinsMarkets();
+  const classes = useStyles()
+  const [searchboxOpen, setSearchboxOpen] = useState(false)
+  const watchedCurrenciesPreferences = useContextSelector(
+    userPreferenceContext,
+    (x) => x.preferences.watchedCurrencies
+  )
+  const setPreferences = useContextSelector(
+    userPreferenceContext,
+    (x) => x.setPreferences
+  )
+  const watchedCurrencies = watchedCurrenciesPreferences.currencies
+  const [period, setPeriod] = useState<Period>("1d")
+  const vsCurrency = watchedCurrenciesPreferences.currency
+  const { data: marketData, fetch } = useCoinsMarkets()
 
-  const currencies = watchedCurrencies.map((c) => c.id);
+  const currencies = watchedCurrencies.map((c) => c.id)
 
   useEffect(() => {
     fetch({
       vsCurrency: vsCurrency as any,
       ids: currencies,
       priceChangePercentage: [periodPriceChangePeriodMap[period]],
-    });
-  }, [currencies.join("/"), vsCurrency]);
+    })
+  }, [currencies.join("/"), vsCurrency])
 
   return (
     <div className={classes.root}>
@@ -77,11 +87,19 @@ export function WatchedCurrencies() {
           open={searchboxOpen}
           onClose={() => setSearchboxOpen(false)}
           onSelect={(item) => {
-            setWatchedCurrencies((prev) => [
-              ...prev.filter((p) => p.id !== item.id),
-              item,
-            ]);
-            setSearchboxOpen(false);
+            setPreferences((prev) => ({
+              ...prev,
+              watchedCurrencies: {
+                ...prev.watchedCurrencies,
+                currencies: [
+                  ...prev.watchedCurrencies.currencies.filter(
+                    (p) => p.id !== item.id
+                  ),
+                  item,
+                ],
+              },
+            }))
+            setSearchboxOpen(false)
           }}
         />
       </div>
@@ -101,7 +119,12 @@ export function WatchedCurrencies() {
           <>
             <CurrencySelector
               currency={vsCurrency}
-              onSelect={(c) => setVsCurrency(c)}
+              onSelect={(c) =>
+                setPreferences((p) => ({
+                  ...p,
+                  watchedCurrencies: { ...p.watchedCurrencies, currency: c },
+                }))
+              }
             />
             <div className={classes.currencyCount}>
               <p
@@ -112,5 +135,5 @@ export function WatchedCurrencies() {
         )}
       </div>
     </div>
-  );
+  )
 }

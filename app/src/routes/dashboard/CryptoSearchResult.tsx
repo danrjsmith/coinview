@@ -1,8 +1,8 @@
-import { makeStyles } from "@material-ui/styles";
-import { motion } from "framer-motion";
-import React from "react";
-import { CoinList } from "src/services/types";
-import { theme } from "../../theme";
+import { makeStyles } from "@material-ui/styles"
+import { motion } from "framer-motion"
+import React from "react"
+import { CoinList } from "src/services/types"
+import { theme } from "../../theme"
 
 const useStyles = makeStyles({
   li: {
@@ -12,15 +12,15 @@ const useStyles = makeStyles({
     cursor: "pointer",
     backgroundColor: theme.surface.light,
   },
-});
+})
 
 interface CryptoSearchResultProps {
-  item: CoinList;
-  onClick: (id: CoinList) => void;
+  item: CoinList
+  onClick: (id: CoinList) => void
 }
 
 export function CryptoSearchResult({ item, onClick }: CryptoSearchResultProps) {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <motion.div
@@ -31,5 +31,5 @@ export function CryptoSearchResult({ item, onClick }: CryptoSearchResultProps) {
     >
       {item.name} ({item.symbol.toUpperCase()})
     </motion.div>
-  );
+  )
 }

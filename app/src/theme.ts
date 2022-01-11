@@ -1,13 +1,13 @@
 export const getCSSVarColor = (cssVarName: string) => {
-  const regex = new RegExp(/var\((.*?)\)/g);
-  const regexExecArray = regex.exec(cssVarName);
+  const regex = new RegExp(/var\((.*?)\)/g)
+  const regexExecArray = regex.exec(cssVarName)
   if (regexExecArray !== null) {
     return getComputedStyle(window.document.body)
       .getPropertyValue(regexExecArray[1])
-      .trim();
+      .trim()
   }
-  return cssVarName;
-};
+  return cssVarName
+}
 
 export const theme = {
   palette: {
@@ -18,6 +18,7 @@ export const theme = {
       contrastText: "var(--palette-primary-contrast-text)",
       contrastSuccessText: "var(--palette-primary-contrast-success-text)",
       contrastErrorText: "var(--palette-primary-contrast-error-text)",
+      contrastWarnText: "var(--palette-primary-contrast-warn-text)",
     },
     secondary: {
       main: "var(--palette-secondary-main)",
@@ -26,6 +27,7 @@ export const theme = {
       contrastText: "var(--palette-secondary-contrast-text)",
       contrastSuccessText: "var(--palette-secondary-contrast-success-text)",
       contrastErrorText: "var(--palette-secondary-contrast-error-text)",
+      contrastWarnText: "var(--palette-secondary-contrast-warn-text)",
     },
     text: {
       main: "var(--palette-text-main)",
@@ -62,4 +64,4 @@ export const theme = {
     light: "var(--surface-light)",
     dark: "var(--surface-dark)",
   },
-};
+}

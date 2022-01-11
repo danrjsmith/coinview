@@ -1,7 +1,7 @@
 interface FetchBoundaryProps {
-  loading: boolean;
-  skeleton?: JSX.Element;
-  children: JSX.Element | null;
+  loading: boolean
+  skeleton?: JSX.Element
+  children: JSX.Element | null
 }
 
 export function FetchBoundary({
@@ -9,5 +9,5 @@ export function FetchBoundary({
   skeleton,
   children,
 }: FetchBoundaryProps) {
-  return loading ? skeleton ?? children : children;
+  return loading ? skeleton ?? children : children
 }

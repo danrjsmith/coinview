@@ -1,4 +1,4 @@
-import { FetchService } from "./FetchService";
+import { FetchService } from "./FetchService"
 import {
   CoinList,
   CoinMarketData,
@@ -8,13 +8,13 @@ import {
   CoinsMarketsServiceParams,
   Id,
   SupportedVsCurrencies,
-} from "./types";
+} from "./types"
 
-const coinGeckUrl: string = "https://api.coingecko.com/api/v3/";
+const coinGeckUrl = "https://api.coingecko.com/api/v3/"
 
 class CoinGeckoService extends FetchService {
   constructor() {
-    super(coinGeckUrl);
+    super(coinGeckUrl)
   }
 
   getCoinsMarkets(
@@ -32,25 +32,25 @@ class CoinGeckoService extends FetchService {
         per_page: params.perPage?.toString(),
         price_change_percentage: params.priceChangePercentage?.toString(),
       },
-    });
+    })
   }
 
   getSupportedVsCurrencies() {
     return this.request<Id<SupportedVsCurrencies>>({
       path: "simple/supported_vs_currencies",
-    });
+    })
   }
 
   getCoinList() {
-    return this.request<Id<CoinList>[]>({ path: "coins/list" });
+    return this.request<Id<CoinList>[]>({ path: "coins/list" })
   }
 
   getCoinMarketData(id: string, params: CoinMarketDataParams) {
     return this.request<Id<CoinMarketData>, Id<CoinMarketDataParams>>({
       path: `coins/${id}/market_chart`,
       params,
-    });
+    })
   }
 }
 
-export const CoinGecko = new CoinGeckoService();
+export const CoinGecko = new CoinGeckoService()

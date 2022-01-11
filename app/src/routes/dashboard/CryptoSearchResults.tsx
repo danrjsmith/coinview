@@ -1,12 +1,12 @@
-import { makeStyles } from "@material-ui/styles";
-import Fuse from "fuse.js";
-import React, { useCallback, useMemo, useRef } from "react";
-import { useVirtual } from "react-virtual";
-import { CoinList } from "src/services/types";
-import { useContextSelector } from "use-context-selector";
-import { cryptoDataContext } from "../../contexts/CryptoDataProvider";
-import { CryptoSearchResult } from "./CryptoSearchResult";
-import { EmptyCryptoSearchResult } from "./EmptyCryptoSearchResult";
+import { makeStyles } from "@material-ui/styles"
+import Fuse from "fuse.js"
+import React, { useCallback, useMemo, useRef } from "react"
+import { useVirtual } from "react-virtual"
+import { CoinList } from "src/services/types"
+import { useContextSelector } from "use-context-selector"
+import { cryptoDataContext } from "../../contexts/CryptoDataProvider"
+import { CryptoSearchResult } from "./CryptoSearchResult"
+import { EmptyCryptoSearchResult } from "./EmptyCryptoSearchResult"
 
 const useStyles = makeStyles({
   ul: {
@@ -16,24 +16,21 @@ const useStyles = makeStyles({
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10,
   },
-});
+})
 
 interface CryptoSearchResultsProps {
-  term: string | "";
-  onSelect: (id: CoinList) => void;
+  term: string | ""
+  onSelect: (id: CoinList) => void
 }
 
 export function CryptoSearchResults({
   term,
   onSelect,
 }: CryptoSearchResultsProps) {
-  const classes = useStyles();
-  const containerRef = useRef<HTMLDivElement>(null);
+  const classes = useStyles()
+  const containerRef = useRef<HTMLDivElement>(null)
 
-  const cryptoCurrencies = useContextSelector(
-    cryptoDataContext,
-    (x) => x.coins
-  );
+  const cryptoCurrencies = useContextSelector(cryptoDataContext, (x) => x.coins)
 
   const results = useMemo(() => {
     if (term != "") {
@@ -41,17 +38,17 @@ export function CryptoSearchResults({
         keys: ["name", "symbol"],
         minMatchCharLength: term.length,
         threshold: 0,
-      });
-      return fuse.search(term);
+      })
+      return fuse.search(term)
     }
-    return [];
-  }, [term]);
+    return []
+  }, [term])
 
   const { totalSize, virtualItems } = useVirtual({
     size: results.length,
     parentRef: containerRef,
     estimateSize: useCallback(() => 38, []),
-  });
+  })
 
   return virtualItems.length > 0 ? (
     <div
@@ -103,5 +100,5 @@ export function CryptoSearchResults({
     </div>
   ) : (
     <></>
-  );
+  )
 }

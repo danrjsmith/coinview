@@ -1,11 +1,11 @@
-import { makeStyles } from "@material-ui/styles";
-import React from "react";
+import { makeStyles } from "@material-ui/styles"
+import React from "react"
 
 interface LoadingRollerProps {
-  size?: number;
+  size?: number
 }
 
-const rollerSize = 80;
+const rollerSize = 80
 
 const useStyles = makeStyles({
   r1: {
@@ -120,10 +120,10 @@ const useStyles = makeStyles({
       left: 0.15 * rollerSize,
     },
   },
-});
+})
 
 export function LoadingRoller({ size = 80 }: LoadingRollerProps) {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <div
@@ -204,5 +204,5 @@ export function LoadingRoller({ size = 80 }: LoadingRollerProps) {
         className={classes.r8}
       />
     </div>
-  );
+  )
 }

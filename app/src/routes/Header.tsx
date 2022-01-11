@@ -1,7 +1,7 @@
-import { makeStyles } from "@material-ui/styles";
-import { motion } from "framer-motion";
-import React from "react";
-import { theme } from "../theme";
+import { makeStyles } from "@material-ui/styles"
+import { motion } from "framer-motion"
+import React from "react"
+import { theme } from "../theme"
 
 const useStyles = makeStyles({
   header: {
@@ -54,10 +54,10 @@ const useStyles = makeStyles({
     padding: "0 14px",
     borderRadius: 14,
   },
-});
+})
 
 export function Header() {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <header className={classes.header}>
@@ -83,5 +83,5 @@ export function Header() {
         </div>
       </div>
     </header>
-  );
+  )
 }

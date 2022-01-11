@@ -1,9 +1,9 @@
-import { Add } from "@material-ui/icons";
-import { makeStyles } from "@material-ui/styles";
-import clsx from "clsx";
-import { motion } from "framer-motion";
-import React from "react";
-import { theme } from "../../theme";
+import { Add } from "@material-ui/icons"
+import { makeStyles } from "@material-ui/styles"
+import clsx from "clsx"
+import { motion } from "framer-motion"
+import React from "react"
+import { theme } from "../../theme"
 
 const useStyles = makeStyles({
   root: {
@@ -45,18 +45,18 @@ const useStyles = makeStyles({
     color: theme.palette.primary.contrastText,
     fontSize: "1em",
   },
-});
+})
 
 interface AddWatchedCurrencyProps {
-  onClick: () => void;
-  disabled?: boolean;
+  onClick: () => void
+  disabled?: boolean
 }
 
 export function AddWatchedCurrency({
   onClick,
   disabled,
 }: AddWatchedCurrencyProps) {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <div className={classes.root}>
@@ -86,5 +86,5 @@ export function AddWatchedCurrency({
         </motion.span>
       </motion.button>
     </div>
-  );
+  )
 }

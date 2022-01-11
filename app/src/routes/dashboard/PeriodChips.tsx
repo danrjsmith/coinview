@@ -1,12 +1,12 @@
-import React from "react";
+import React from "react"
 
-export type Period = "1d" | "7d" | "30d";
+export type Period = "1d" | "7d" | "30d"
 
 interface PeriodChipsProps {
-  period: Period;
-  setPeriod: (period: Period) => void;
+  period: Period
+  setPeriod: (period: Period) => void
 }
 
 export function PeriodChips(props: PeriodChipsProps) {
-  return <div></div>;
+  return <div></div>
 }

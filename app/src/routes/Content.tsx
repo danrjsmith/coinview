@@ -1,5 +1,5 @@
-import { makeStyles } from "@material-ui/styles";
-import React from "react";
+import { makeStyles } from "@material-ui/styles"
+import React from "react"
 
 const useStyles = makeStyles({
   content: {
@@ -10,14 +10,14 @@ const useStyles = makeStyles({
     gridTemplateRows: "28px auto",
     gridTemplateColumns: "1fr",
   },
-});
+})
 
 interface ContentProps {
-  children: JSX.Element | JSX.Element[];
+  children: JSX.Element | JSX.Element[]
 }
 
 export function Content({ children }: ContentProps) {
-  const classes = useStyles();
+  const classes = useStyles()
 
-  return <div className={classes.content}>{children}</div>;
+  return <div className={classes.content}>{children}</div>
 }

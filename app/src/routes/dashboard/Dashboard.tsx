@@ -1,6 +1,6 @@
-import React from "react";
-import { TickerBar } from "./TickerBar";
-import { WatchedCurrencies } from "./WatchedCurrencies";
+import React from "react"
+import { TickerBar } from "./TickerBar"
+import { WatchedCurrencies } from "./WatchedCurrencies"
 
 export function Dashboard() {
   return (
@@ -8,5 +8,5 @@ export function Dashboard() {
       <TickerBar />
       <WatchedCurrencies />
     </>
-  );
+  )
 }

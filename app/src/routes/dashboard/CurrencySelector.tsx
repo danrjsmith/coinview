@@ -1,10 +1,10 @@
-import { makeStyles, Popover } from "@material-ui/core";
-import clsx from "clsx";
-import { motion } from "framer-motion";
-import React from "react";
-import { useContextSelector } from "use-context-selector";
-import { cryptoDataContext } from "../../contexts/CryptoDataProvider";
-import { theme } from "../../theme";
+import { makeStyles, Popover } from "@material-ui/core"
+import clsx from "clsx"
+import { motion } from "framer-motion"
+import React from "react"
+import { useContextSelector } from "use-context-selector"
+import { cryptoDataContext } from "../../contexts/CryptoDataProvider"
+import { theme } from "../../theme"
 
 const useStyles = makeStyles({
   root: {
@@ -43,12 +43,12 @@ const useStyles = makeStyles({
     boxShadow: `0px -1px 0px ${theme.surface.main} inset`,
     backgroundColor: theme.surface.light,
   },
-});
+})
 
 interface CurrencySelectorProps {
-  currency: string;
-  onSelect: (currency: string) => void;
-  classes?: { root?: string; p?: string; ul?: string; li?: string };
+  currency: string
+  onSelect: (currency: string) => void
+  classes?: { root?: string; p?: string; ul?: string; li?: string }
 }
 
 export function CurrencySelector({
@@ -59,22 +59,20 @@ export function CurrencySelector({
   const currencies = useContextSelector(
     cryptoDataContext,
     (v) => v.vsCurrencies
-  );
-  const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
-    null
-  );
+  )
+  const classes = useStyles()
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
 
   const handleClose = (event: React.MouseEvent<HTMLElement>) => {
-    event.stopPropagation();
-    setAnchorEl(null);
-  };
+    event.stopPropagation()
+    setAnchorEl(null)
+  }
 
-  const open = Boolean(anchorEl);
+  const open = Boolean(anchorEl)
 
   return (
     <button
@@ -100,11 +98,12 @@ export function CurrencySelector({
         <ul className={clsx(classes.ul, overrideClasses?.ul)}>
           {currencies.sort().map((currency) => (
             <motion.li
+              key={currency}
               whileHover={{ backgroundColor: theme.surface.main }}
               transition={{ ease: "linear", duration: 0.05 }}
               onClick={(e) => {
-                handleClose(e);
-                onSelect(currency);
+                handleClose(e)
+                onSelect(currency)
               }}
               className={clsx(classes.li, overrideClasses?.li)}
             >
@@ -114,5 +113,5 @@ export function CurrencySelector({
         </ul>
       </Popover>
     </button>
-  );
+  )
 }

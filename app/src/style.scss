@@ -37,6 +37,10 @@ body {
   overscroll-behavior: none;
 }
 
+.rv-xy-plot {
+  z-index: 100;
+}
+
 a {
   &:hover {
     svg.arrow-right {
@@ -132,6 +136,7 @@ body[data-theme="light"] {
   --palette-primary-light: hsl(228, 73%, 75%);
   --palette-primary-dark: hsl(228, 54%, 36%);
   --palette-primary-contrast-text: hsl(0, 0%, 100%);
+  --palette-primary-contrast-warn-text: #ffd7af;
   --palette-primary-contrast-success-text: hsl(133, 90%, 81%);
   --palette-primary-contrast-error-text: hsl(0, 95%, 84%);
 
@@ -139,6 +144,7 @@ body[data-theme="light"] {
   --palette-secondary-light: hsl(216, 84%, 75%);
   --palette-secondary-dark: hsl(246.63, 100%, 31.96%);
   --palette-secondary-contrast-text: hsl(0, 0%, 100%);
+  --palette-secondary-contrast-warn-text: #ffd7af;
   --palette-secondary-contrast-success-text: hsl(133, 90%, 81%);
   --palette-secondary-contrast-error-text: hsl(0, 95%, 84%);
 
@@ -147,7 +153,7 @@ body[data-theme="light"] {
   --palette-error-dark: hsl(3, 55%, 37%);
   --palette-error-contrast-text: hsl(3, 96%, 99%);
 
-  --palette-warning-main: hsl(40, 60%, 57%);
+  --palette-warning-main: #ffd7af;
   --palette-warning-light: hsl(40, 69%, 83%);
   --palette-warning-dark: hsl(40, 55%, 37%);
   --palette-warning-contrast-text: hsl(40, 96%, 99%);

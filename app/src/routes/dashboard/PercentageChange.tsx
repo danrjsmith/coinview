@@ -1,8 +1,8 @@
-import { makeStyles } from "@material-ui/styles";
-import clsx from "clsx";
-import { motion } from "framer-motion";
-import React, { useMemo } from "react";
-import { theme } from "../../theme";
+import { makeStyles } from "@material-ui/styles"
+import clsx from "clsx"
+import { motion } from "framer-motion"
+import React, { useMemo } from "react"
+import { theme } from "../../theme"
 
 const useStyles = makeStyles({
   percentageChangeItem: {
@@ -22,7 +22,7 @@ const useStyles = makeStyles({
   downArrow: {
     borderLeft: "3px solid transparent",
     borderRight: "3px solid transparent",
-    borderTop: `5px solid ${theme.palette.secondary.contrastErrorText}`,
+    borderTop: `5px solid ${theme.palette.secondary.contrastWarnText}`,
   },
   percentage: {
     display: "flex",
@@ -35,7 +35,7 @@ const useStyles = makeStyles({
     color: theme.palette.secondary.contrastSuccessText,
   },
   negative: {
-    color: theme.palette.secondary.contrastErrorText,
+    color: theme.palette.secondary.contrastWarnText,
   },
   percentageText: {},
   symbol: {
@@ -47,12 +47,12 @@ const useStyles = makeStyles({
     color: theme.palette.secondary.contrastText,
   },
   symbolText: { textTransform: "uppercase" },
-});
+})
 
 export interface PercentageChangeProps {
-  percentageChange: number;
-  symbol?: string;
-  className?: string;
+  percentageChange: number
+  symbol?: string
+  className?: string
 }
 
 export function PercentageChange({
@@ -60,10 +60,10 @@ export function PercentageChange({
   symbol,
   className,
 }: PercentageChangeProps) {
-  const classes = useStyles();
+  const classes = useStyles()
   const positive = useMemo(() => Math.sign(percentageChange) === 1, [
     percentageChange,
-  ]);
+  ])
 
   return (
     <motion.li className={clsx(classes.percentageChangeItem, className)}>
@@ -91,5 +91,5 @@ export function PercentageChange({
         </div>
       )}
     </motion.li>
-  );
+  )
 }

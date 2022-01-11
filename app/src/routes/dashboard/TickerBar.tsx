@@ -1,13 +1,15 @@
-import { makeStyles } from "@material-ui/styles";
-import { motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
-import Ticker from "react-ticker";
-import { FetchBoundary } from "../../designsystem/FetchBoundary";
-import { LoadingEllipsis } from "../../designsystem/LoadingEllipsis";
-import { useCoinsMarkets } from "../../hooks/useCoinsMarkets";
-import { theme } from "../../theme";
-import { CurrencySelector } from "./CurrencySelector";
-import { TickerItem } from "./Ticker";
+import { makeStyles } from "@material-ui/styles"
+import { motion } from "framer-motion"
+import React, { useCallback, useEffect, useState } from "react"
+import Ticker from "react-ticker"
+import { useContextSelector } from "use-context-selector"
+import { userPreferenceContext } from "../../contexts/UserPreferenceProvider"
+import { FetchBoundary } from "../../designsystem/FetchBoundary"
+import { LoadingEllipsis } from "../../designsystem/LoadingEllipsis"
+import { useCoinsMarkets } from "../../hooks/useCoinsMarkets"
+import { theme } from "../../theme"
+import { CurrencySelector } from "./CurrencySelector"
+import { TickerItem } from "./Ticker"
 
 const useStyles = makeStyles({
   bar: {
@@ -42,7 +44,7 @@ const useStyles = makeStyles({
   currencySelector: {
     height: 28,
   },
-});
+})
 
 const coinChangeParams: Parameters<
   ReturnType<typeof useCoinsMarkets>["fetch"]
@@ -51,17 +53,33 @@ const coinChangeParams: Parameters<
   first: 20,
   order: "market_cap_desc",
   priceChangePercentage: ["24h"],
-};
+}
 
 export function TickerBar() {
-  const classes = useStyles();
-  const { data, fetch, loading } = useCoinsMarkets();
-  const [pause, setPause] = useState(false);
-  const [vsCurrency, setVsCurrency] = useState<string>("gbp");
+  const classes = useStyles()
+  const { data, fetch, loading } = useCoinsMarkets()
+  const [pause, setPause] = useState(false)
+  const vsCurrency = useContextSelector(
+    userPreferenceContext,
+    (x) => x.preferences.tickerBar.currency
+  )
+  const setPreferences = useContextSelector(
+    userPreferenceContext,
+    (x) => x.setPreferences
+  )
+  const setVsCurrency = useCallback(
+    (_vsCurrency: string) => {
+      setPreferences((value) => ({
+        ...value,
+        tickerBar: { currency: _vsCurrency },
+      }))
+    },
+    [setPreferences]
+  )
 
   useEffect(() => {
-    fetch({ ...coinChangeParams, vsCurrency: vsCurrency as any });
-  }, [vsCurrency]);
+    fetch({ ...coinChangeParams, vsCurrency: vsCurrency as any })
+  }, [vsCurrency])
 
   return (
     <div className={classes.bar}>
@@ -94,5 +112,5 @@ export function TickerBar() {
         classes={{ root: classes.currencySelector }}
       />
     </div>
-  );
+  )
 }

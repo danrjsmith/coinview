@@ -1,8 +1,8 @@
-import { makeStyles } from "@material-ui/styles";
-import React from "react";
-import { CoinsMarkets } from "../../services/types";
-import { theme } from "../../theme";
-import { PercentageChange } from "./PercentageChange";
+import { makeStyles } from "@material-ui/styles"
+import React from "react"
+import { CoinsMarkets } from "../../services/types"
+import { theme } from "../../theme"
+import { PercentageChange } from "./PercentageChange"
 
 const useStyles = makeStyles({
   currencyChangeItem: {
@@ -22,16 +22,16 @@ const useStyles = makeStyles({
     fontSize: 15,
     padding: "0 10px",
   },
-});
+})
 
 export interface TickerProps {
-  items: CoinsMarkets[];
-  index: number;
+  items: CoinsMarkets[]
+  index: number
 }
 
 export function TickerItem({ items, index }: TickerProps) {
-  const classes = useStyles();
-  const item = items[index];
+  const classes = useStyles()
+  const item = items[index]
 
   return (
     <PercentageChange
@@ -39,5 +39,5 @@ export function TickerItem({ items, index }: TickerProps) {
       percentageChange={item.price_change_percentage_24h_in_currency ?? 0}
       className={classes.currencyChangeItem}
     />
-  );
+  )
 }

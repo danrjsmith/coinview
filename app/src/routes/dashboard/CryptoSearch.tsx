@@ -1,10 +1,10 @@
-import { makeStyles, Modal } from "@material-ui/core";
-import { motion } from "framer-motion";
-import React, { useRef } from "react";
-import { useForm, useWatch } from "react-hook-form";
-import { CoinList } from "src/services/types";
-import { theme } from "../../theme";
-import { CryptoSearchResults } from "./CryptoSearchResults";
+import { makeStyles, Modal } from "@material-ui/core"
+import { motion } from "framer-motion"
+import React, { useRef } from "react"
+import { useForm, useWatch } from "react-hook-form"
+import { CoinList } from "src/services/types"
+import { theme } from "../../theme"
+import { CryptoSearchResults } from "./CryptoSearchResults"
 
 const useStyles = makeStyles({
   modal: {
@@ -29,23 +29,23 @@ const useStyles = makeStyles({
     fontWeight: "normal",
     padding: 14,
   },
-});
+})
 
 interface CryptoSearchProps {
-  open: boolean;
-  onClose: () => void;
-  onSelect: (id: CoinList) => void;
+  open: boolean
+  onClose: () => void
+  onSelect: (id: CoinList) => void
 }
 
-const inputName = "search";
+const inputName = "search"
 
 export function CryptoSearch({ open, onClose, onSelect }: CryptoSearchProps) {
-  const classes = useStyles();
-  const inputRef = useRef<HTMLInputElement | null>(null);
-  const { handleSubmit, register, control, setValue } = useForm();
+  const classes = useStyles()
+  const inputRef = useRef<HTMLInputElement | null>(null)
+  const { handleSubmit, register, control, setValue } = useForm()
 
-  const term = useWatch({ name: inputName, control });
-  const inputProps = register(inputName);
+  const term = useWatch({ name: inputName, control })
+  const inputProps = register(inputName)
 
   return (
     <Modal
@@ -53,8 +53,8 @@ export function CryptoSearch({ open, onClose, onSelect }: CryptoSearchProps) {
       onBackdropClick={onClose}
       BackdropProps={{ invisible: true }}
       onRendered={() => {
-        setValue(inputName, "");
-        inputRef.current?.focus();
+        setValue(inputName, "")
+        inputRef.current?.focus()
       }}
     >
       <div className={classes.modal}>
@@ -64,8 +64,8 @@ export function CryptoSearch({ open, onClose, onSelect }: CryptoSearchProps) {
             className={classes.input}
             {...inputProps}
             ref={(el) => {
-              inputRef.current = el;
-              inputProps.ref(el);
+              inputRef.current = el
+              inputProps.ref(el)
             }}
             animate={(term ?? "") === "" ? "empty" : "term"}
             initial={"empty"}
@@ -85,5 +85,5 @@ export function CryptoSearch({ open, onClose, onSelect }: CryptoSearchProps) {
         <CryptoSearchResults term={term ?? ""} onSelect={onSelect} />
       </div>
     </Modal>
-  );
+  )
 }
