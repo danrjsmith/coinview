@@ -1,2 +1,2 @@
-./node_modules
-./.vscode/*
+app/node_modules/*
+app/.vscode/*

@@ -66,7 +66,7 @@ export function PercentageChange({
   ])
 
   return (
-    <motion.li className={clsx(classes.percentageChangeItem, className)}>
+    <motion.div className={clsx(classes.percentageChangeItem, className)}>
       <div className={classes.icon}>
         <div
           className={clsx({
@@ -90,6 +90,6 @@ export function PercentageChange({
           <p className={classes.symbolText}>{symbol}</p>
         </div>
       )}
-    </motion.li>
+    </motion.div>
   )
 }

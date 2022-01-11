@@ -7,7 +7,12 @@ function setItem<T>(key: string) {
 function getItem<T>(key: string): T | undefined {
   const value = localStorage.getItem(key)
   if (value !== undefined && value !== null) {
-    return JSON.parse(value) as T
+    try {
+      return JSON.parse(value) as T
+    } catch {
+      console.warn("Unable to parse data from [" + key + "].")
+      return undefined
+    }
   }
   return undefined
 }

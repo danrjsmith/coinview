@@ -10,6 +10,7 @@ const useStyles = makeStyles({
     gridTemplateColumns: "92px auto 92px",
     alignItems: "center",
     padding: 10,
+    boxSizing: "border-box",
   },
   leftContainer: {
     display: "flex",

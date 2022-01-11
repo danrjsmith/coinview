@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react"
 import { useContextSelector } from "use-context-selector"
 import { userPreferenceContext } from "../../contexts/UserPreferenceProvider"
 import { useCoinsMarkets } from "../../hooks/useCoinsMarkets"
-import { PriceChangePercentage } from "../../services/types"
+import { CoinList, PriceChangePercentage } from "../../services/types"
 import { theme } from "../../theme"
 import { AddWatchedCurrency } from "./AddWatchedCurrency"
 import { CryptoSearch } from "./CryptoSearch"
@@ -36,6 +36,7 @@ const useStyles = makeStyles({
     padding: "12px 0",
     display: "grid",
     gridTemplateColumns: "repeat(3, 1fr)",
+    gridColumnGap: 22,
   },
   bottom: {
     display: "flex",
@@ -104,13 +105,39 @@ export function WatchedCurrencies() {
         />
       </div>
       <div className={clsx({ [classes.middle]: watchedCurrencies.length > 0 })}>
-        {watchedCurrencies.map((item) => (
+        {watchedCurrencies.map((item, i) => (
           <HighlightCard
             item={item}
             marketData={marketData.find((data) => data.id === item.id)}
             key={item.id}
             period={period}
             vsCurrency={vsCurrency}
+            onRemove={() =>
+              setPreferences((prev) => ({
+                ...prev,
+                watchedCurrencies: {
+                  ...prev.watchedCurrencies,
+                  currencies: prev.watchedCurrencies.currencies.filter(
+                    (candidate) => candidate.id !== item.id
+                  ),
+                },
+              }))
+            }
+            onReplace={(incoming) => {
+              const startArr = [...watchedCurrencies].slice(0, i)
+              const endArr = [...watchedCurrencies].slice(
+                i + 1,
+                watchedCurrencies.length
+              )
+              const newArr: CoinList[] = [...startArr, incoming, ...endArr]
+              setPreferences((prev) => ({
+                ...prev,
+                watchedCurrencies: {
+                  ...prev.watchedCurrencies,
+                  currencies: newArr,
+                },
+              }))
+            }}
           />
         ))}
       </div>
@@ -129,7 +156,7 @@ export function WatchedCurrencies() {
             <div className={classes.currencyCount}>
               <p
                 className={classes.currencyCountText}
-              >{`${watchedCurrencies.length}/3 currencies`}</p>
+              >{`${watchedCurrencies.length}/3 currency slots used`}</p>
             </div>
           </>
         )}

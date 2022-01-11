@@ -1,8 +1,9 @@
 import { makeStyles } from "@material-ui/styles"
 import clsx from "clsx"
-import React, { useMemo } from "react"
+import React, { useMemo, useState } from "react"
 import { FetchBoundary } from "../../designsystem/FetchBoundary"
 import { LoadingEllipsis } from "../../designsystem/LoadingEllipsis"
+import { Skeleton } from "../../designsystem/Skeleton"
 import { useCoinMarketData } from "../../hooks/useCoinMarketData"
 import {
   CoinList,
@@ -10,6 +11,7 @@ import {
   CoinsMarkets,
 } from "../../services/types"
 import { theme } from "../../theme"
+import { CardOptions } from "./CardOptions"
 import { LinePlot } from "./LinePlot"
 import { PercentageChange } from "./PercentageChange"
 import { Period } from "./PeriodChips"
@@ -17,7 +19,7 @@ import { Period } from "./PeriodChips"
 const useStyles = makeStyles({
   root: {
     width: 210,
-    height: 140,
+    height: 155,
     overflow: "hidden",
     position: "relative",
     borderRadius: 20,
@@ -26,38 +28,53 @@ const useStyles = makeStyles({
     boxShadow: "0px 5px 15px 0 #5a76e74d",
   },
   backgroundTop: {
-    background: `linear-gradient(315deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+    backgroundColor: theme.palette.secondary.light,
+    height: 34,
     top: 0,
+    position: "absolute",
+    width: "100%",
+    opacity: 0.5,
+    cursor: "pointer",
+  },
+  backgroundMiddle: {
+    background: `linear-gradient(315deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+    top: 14,
     height: 91,
     width: "100%",
     position: "absolute",
-    borderBottomRightRadius: 20,
-    borderBottomLeftRadius: 20,
+    borderRadius: 20,
     zIndex: 2,
   },
   backgroundBottom: {
     background: `linear-gradient(315deg, ${theme.palette.secondary.main}, ${theme.palette.secondary.light})`,
-    top: 71,
+    top: 86,
     height: 69,
     width: "100%",
     position: "absolute",
     zIndex: 1,
   },
   plot: {
-    paddingTop: 5,
+    marginTop: 20,
     zIndex: 3,
     height: 91,
   },
   loading: {
     height: 125,
     display: "grid",
-    paddingTop: 16,
+    paddingTop: 8,
+  },
+  loadingFigure: {
+    width: 50,
+  },
+  loadingFigureSmall: {
+    width: 30,
+    paddingBottom: 2,
   },
   bottom: {
     display: "grid",
-    gridTemplateColumns: "repeat(3, 70px)",
+    gridTemplateColumns: "140px 70px",
     alignItems: "center",
-    marginTop: -2,
+    marginTop: 14,
     textTransform: "uppercase",
     color: theme.surface.light,
   },
@@ -66,10 +83,33 @@ const useStyles = makeStyles({
     justifyContent: "center",
     alignItems: "center",
     zIndex: 3,
-    maxWidth: 70,
+  },
+  lineHeight: {
+    lineHeight: "14px",
   },
   largeFont: {
-    fontSize: 22,
+    fontSize: 26,
+    paddingRight: 17,
+    justifySelf: "flex-end",
+    height: 50,
+    textOverflow: "ellipsis",
+    width: 70,
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    display: "inline-block",
+  },
+  figures: {
+    zIndex: 2,
+    paddingLeft: 20,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+  },
+  settingsIcon: {
+    position: "absolute",
+    top: -11,
+    right: "50%",
+    marginRight: -5,
   },
 })
 
@@ -94,6 +134,8 @@ const periodMarketDataKeyMap: Record<Period, keyof CoinsMarkets> = {
 interface HighlightCardProps {
   item: CoinList
   marketData: CoinsMarkets | undefined
+  onRemove: () => void
+  onReplace: (coin: CoinList) => void
   period: Period
   vsCurrency: string
 }
@@ -101,9 +143,12 @@ interface HighlightCardProps {
 export function HighlightCard({
   item,
   marketData,
+  onRemove,
+  onReplace,
   period,
   vsCurrency,
 }: HighlightCardProps) {
+  const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null)
   const classes = useStyles()
   const { data, loading } = useCoinMarketData({
     id: item.id,
@@ -131,8 +176,14 @@ export function HighlightCard({
     }
   }, [loading])
 
+  const handleCloseMenu = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation()
+    setMenuAnchor(null)
+  }
+
   return (
     <div className={classes.root}>
+      <div className={classes.settingsIcon}>...</div>
       <div className={classes.plot}>
         <FetchBoundary
           loading={loading}
@@ -149,27 +200,56 @@ export function HighlightCard({
           </>
         </FetchBoundary>
       </div>
-
       <div className={classes.bottom}>
-        <PercentageChange
-          percentageChange={
-            (marketData?.[periodMarketDataKeyMap[period]] as number) ??
-            percentageChange ??
-            0
-          }
-          className={classes.center}
-        />
-        {/* <Skeleton animation="wave" /> */}
+        <div className={classes.figures}>
+          <FetchBoundary
+            loading={loading}
+            skeleton={
+              <div className={classes.loadingFigureSmall}>
+                <Skeleton height={14} />
+              </div>
+            }
+          >
+            <PercentageChange
+              percentageChange={
+                (marketData?.[periodMarketDataKeyMap[period]] as number) ??
+                percentageChange ??
+                0
+              }
+              className={clsx(classes.center, classes.lineHeight)}
+            />
+          </FetchBoundary>
+          <FetchBoundary
+            loading={loading}
+            skeleton={
+              <div className={classes.loadingFigure}>
+                <Skeleton height={14} />
+              </div>
+            }
+          >
+            <div className={clsx(classes.center, classes.lineHeight)}>
+              <span>{`${(marketData?.current_price ?? price)?.toFixed(
+                3
+              )} ${vsCurrency}`}</span>
+            </div>
+          </FetchBoundary>
+        </div>
         <div className={clsx(classes.center, classes.largeFont)}>
           {item.symbol}
         </div>
-        <div className={classes.center}>
-          <span>{(marketData?.current_price ?? price)?.toFixed(3)}</span>
-          <span>{vsCurrency}</span>
-        </div>
       </div>
-      <div className={classes.backgroundTop} />
+      <div
+        className={classes.backgroundTop}
+        onClick={(e) => setMenuAnchor(e.currentTarget)}
+      />
+      <div className={classes.backgroundMiddle} />
       <div className={classes.backgroundBottom} />
+      <CardOptions
+        anchor={menuAnchor}
+        onClose={handleCloseMenu}
+        onRemove={onRemove}
+        onReplace={onReplace}
+      />
     </div>
   )
 }
